@@ -13,9 +13,7 @@ buttonStop.addEventListener('click', stopTimer);
 buttonReset.addEventListener('click', resetTimer);
 
 function stopTimer() {
-    if (stopTime == false) {
-        stopTime = true;
-    }
+    stopTime = true;
 }
 
 function startTimer() {
