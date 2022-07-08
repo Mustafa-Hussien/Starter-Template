@@ -8,35 +8,63 @@ let sec = 0,
     min = 0,
     hr = 0;
 
-buttonStart.addEventListener('click', stopTime = false)
-buttonStop.addEventListener('click', stopTime = true)
+buttonStart.addEventListener('click', startTimer);
+buttonStop.addEventListener('click', stopTimer);
+buttonReset.addEventListener('click', resetTimer);
+
+function stopTimer() {
+    if (stopTime == false) {
+        stopTime = true;
+    }
+}
+
+function startTimer() {
+    setTimeout(function () {
+        if (stopTime == true) {
+            stopTime = false;
+            timerCycle()
+        }
+    }, 1000)
+}
 
 function timerCycle() {
-    if (stopTime = false) {
+    if (stopTime == false) {
         sec = parseInt(sec);
         min = parseInt(min);
         hr = parseInt(hr);
 
-        sec += 1;
-        if (sec < 10) {
-            sec = '0' + sec;
-        } else if (sec === 60) {
+        sec = sec + 1;
+
+        if (sec == 60) {
+            min = min + 1;
             sec = 0;
-            min += 1;
         }
-
-        if (min < 10) {
-            min = '0' + min;
-        } else if (min === 60) {
+        if (min == 60) {
+            hr = hr + 1;
             min = 0;
-            hr += 1;
+            sec = 0;
         }
 
-        if (hr < 10) {
+        if (sec < 10 || sec == 0) {
+            sec = '0' + sec;
+        }
+        if (min < 10 || min == 0) {
+            min = '0' + min;
+        }
+        if (hr < 10 || hr == 0) {
             hr = '0' + hr;
         }
 
+        timeSpan.innerHTML = hr + ':' + min + ':' + sec;
+
         setTimeout(timerCycle, 1000);
-        timeSpan.innerHTML = `${hr}:${min}:${sec}`
     }
+}
+
+function resetTimer() {
+    timeSpan.innerHTML = '00:00:00';
+    stopTime = true;
+    hr = 0;
+    sec = 0;
+    min = 0;
 }
